@@ -57,5 +57,5 @@ def search_build(message):
     cnx.close()
 
 
-bot.polling()
+bot.polling(none_stop=True)
 
