@@ -22,7 +22,7 @@ def send_text(message):
         bot.send_message(message.chat.id, 'Нажмите на кнопку!',reply_markup=keyboard1)
 
 def search_build(message):
-    cnx = mysql.connector.connect(user='root', password='root', host='127.0.0.1', port='3306', database='herodb')
+    cnx = mysql.connector.connect(user='b525271a540473', password='558d25ff', host='eu-cdbr-west-01.cleardb.com', port='3306', database='heroku_0185be8cf2dc584')
     cursor = cnx.cursor()
     build = ("SELECT Slot1, Slot2, Slot3, Slot4, Slot5, Slot6 FROM builds WHERE HeroName = %s")
     query = message.text
