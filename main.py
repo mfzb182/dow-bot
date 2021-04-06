@@ -56,13 +56,6 @@ def search_build(message):
 
     cnx.close()
 
-def echo_messages(*messages):
-    for m in messages:
-        chatid = m.chat.id
-        if m.content_type == 'text':
-            text = m.text
-            bot.send_message(chatid, text)
-bot.set_update_listener(echo_messages)
 bot.polling()
 
 while True:
