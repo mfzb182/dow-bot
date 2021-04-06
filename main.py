@@ -6,10 +6,10 @@ from telebot import types
 bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard1.row('Получить билд')
-photo = open('img/main_image.jpg', 'rb')
 
 @bot.message_handler(commands=['start'])
 def start_photo(message):
+    with open('img/main_image.jpg', 'rb') as photo:
 	bot.send_photo(message.chat.id, photo)
 	bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажмите на кнопку 🔽 Получить билд 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
 
