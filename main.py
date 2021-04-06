@@ -10,8 +10,8 @@ keyboard1.row('Получить билд')
 @bot.message_handler(commands=['start'])
 def start_photo(message):
     with open('img/main_image.jpg', 'rb') as photo:
-	bot.send_photo(message.chat.id, photo)
-	bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажмите на кнопку 🔽 Получить билд 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
+	    bot.send_photo(message.chat.id, photo)
+	    bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажмите на кнопку 🔽 Получить билд 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
