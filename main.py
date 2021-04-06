@@ -56,7 +56,7 @@ def search_build(message):
 
     cnx.close()
 
-bot.polling()
+bot.polling(timeout=10)
 
 while True:
     pass
