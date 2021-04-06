@@ -57,5 +57,6 @@ def search_build(message):
     cnx.close()
 
 
-bot.polling(none_stop=True)
+bot.polling(none_stop=False, interval=0, timeout=20)
+bot.get_updates(1234,100,20)
 
