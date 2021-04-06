@@ -1,0 +1,61 @@
+import telebot
+import mysql.connector
+from mysql.connector import errorcode, cursor
+from telebot import types
+
+bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
+keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+keyboard1.row('Получить билд')
+photo = open('img/main_image.jpg', 'rb')
+
+@bot.message_handler(commands=['start'])
+def start_photo(message):
+	bot.send_photo(message.chat.id, photo)
+	bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажмите на кнопку 🔽 Получить билд 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
+
+@bot.message_handler(content_types=['text'])
+def send_text(message):
+    if message.text.lower() == 'получить билд':
+       sch = bot.send_message(message.chat.id, 'Напишите для какого героя вам нужен билд:')
+       bot.register_next_step_handler(sch, search_build)
+    elif message.text.lower() != 'получить билд':
+        bot.send_message(message.chat.id, 'Нажмите на кнопку!',reply_markup=keyboard1)
+
+def search_build(message):
+    cnx = mysql.connector.connect(user='root', password='root', host='127.0.0.1', port='3306', database='herodb')
+    cursor = cnx.cursor()
+    build = ("SELECT Slot1, Slot2, Slot3, Slot4, Slot5, Slot6 FROM builds WHERE HeroName = %s")
+    query = message.text
+    cursor.execute(build, (query,))
+    rows_build = cursor.fetchall()
+
+    hero = ("SELECT HeroNAME FROM builds WHERE HeroName = %s")
+    cursor.execute(hero, (query,))
+    row_hero = cursor.fetchone()
+
+
+    if not row_hero:
+        bot.send_message(message.chat.id, 'Такого героя не существует!\nНажмите снова на кнопку Получить билд',reply_markup=keyboard1)
+    else:
+        result = []
+        for row in rows_build:
+            for x in row:
+                result.append(x)
+
+        slot_1 = result[0]
+        slot_2 = result[1]
+        slot_3 = result[2]
+        slot_4 = result[3]
+        slot_5 = result[4]
+        slot_6 = result[5]
+        full_build = "Рекомендованный билд для {}:"\
+                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
+        bot.send_message(message.chat.id, full_build)
+        bot.send_message(message.chat.id, 'Если вам нужен билд еще для одного героя нажмите снова на кнопку Получить билд',reply_markup=keyboard1)
+
+
+    cnx.close()
+
+
+bot.polling()
+
