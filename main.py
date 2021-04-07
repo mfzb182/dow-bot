@@ -37,8 +37,9 @@ def search_build(message):
     if not row_hero:
         bot.send_message(message.chat.id, 'Такого героя не существует!\nНажмите снова на кнопку Получить билд',reply_markup=keyboard1)
     else:
-        query = row_hero[0]
         result = []
+        for row in row_hero:
+            query = row
         for row in rows_build:
             for x in row:
                 result.append(x)
