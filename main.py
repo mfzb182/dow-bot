@@ -51,7 +51,7 @@ def search_build(message):
         full_build = "🔝 Рекомендованный билд для {} 🔝"\
                      "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
         bot.send_message(message.chat.id, full_build)
-        bot.send_message(message.chat.id, 'Если вам нужен билд еще для одного героя нажмите снова на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Если вам нужен билд еще для одного героя нажмите снова на кнопку\n ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
 
 
     cnx.close()
