@@ -1,7 +1,6 @@
 import telebot
 import os
 import mysql.connector
-from mysql.connector import errorcode, cursor
 from telebot import types
 
 bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
