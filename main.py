@@ -45,16 +45,11 @@ def search_build(message):
     if not row_hero:
         bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
     else:
-        hero_result = []
-        for row in row_hero:
-            for x in row:
-                hero_result.append(x)
         build_result = []
         for row in rows_build:
             for x in row:
                 build_result.append(x)
 
-        hero_name = hero_result[0]
         slot_1 = build_result[0]
         slot_2 = build_result[1]
         slot_3 = build_result[2]
@@ -62,7 +57,7 @@ def search_build(message):
         slot_5 = build_result[4]
         slot_6 = build_result[5]
         full_build = "✅🔝 Рекомендованный билд для {}"\
-                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(hero_name,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
+                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(msg_query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
         bot.send_message(message.chat.id, full_build)
         bot.send_message(message.chat.id, 'Нужен еще билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
 
