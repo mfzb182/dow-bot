@@ -33,31 +33,35 @@ def send_text(message):
 def search_build(message):
     cnx = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name)
     cursor = cnx.cursor()
-    build = ("SELECT Slot1, Slot2, Slot3, Slot4, Slot5, Slot6 FROM builds WHERE HeroName = %s")
-    query = message.text
-    cursor.execute(build, (query,))
+    build_sql = ("SELECT Slot1, Slot2, Slot3, Slot4, Slot5, Slot6 FROM builds WHERE HeroName = %s")
+    msg_query = message.text.lower
+    cursor.execute(build_sql, (msg_query,))
     rows_build = cursor.fetchall()
 
-    hero = ("SELECT HeroNAME FROM builds WHERE HeroName = %s")
-    cursor.execute(hero, (query,))
+    hero_sql = ("SELECT HeroNAME FROM builds WHERE HeroName = %s")
+    cursor.execute(hero_sql, (msg_query,))
     row_hero = cursor.fetchone()
 
     if not row_hero:
         bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
     else:
-        result = []
+        hero_result = []
+        for row in row_hero:
+            hero_result.append(row)
+        build_result = []
         for row in rows_build:
             for x in row:
-                result.append(x)
+                build_result.append(x)
 
-        slot_1 = result[0]
-        slot_2 = result[1]
-        slot_3 = result[2]
-        slot_4 = result[3]
-        slot_5 = result[4]
-        slot_6 = result[5]
+        hero_name = hero_result[0]
+        slot_1 = build_result[0]
+        slot_2 = build_result[1]
+        slot_3 = build_result[2]
+        slot_4 = build_result[3]
+        slot_5 = build_result[4]
+        slot_6 = build_result[5]
         full_build = "✅🔝 Рекомендованный билд для {}"\
-                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
+                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(hero_name,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
         bot.send_message(message.chat.id, full_build)
         bot.send_message(message.chat.id, 'Нужен еще билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
 
