@@ -19,7 +19,7 @@ def send_text(message):
        sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
        bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() != 'получить билд':
-        bot.send_message(message.chat.id, 'Нажмите на кнопку 🌚',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
 
 def search_build(message):
     cnx = mysql.connector.connect(user='b525271a540473', password='558d25ff', host='eu-cdbr-west-01.cleardb.com', port='3306', database='heroku_0185be8cf2dc584')
@@ -51,7 +51,7 @@ def search_build(message):
         full_build = "✅🔝 Рекомендованный билд для {}"\
                      "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
         bot.send_message(message.chat.id, full_build)
-        bot.send_message(message.chat.id, 'Нужен еще билд ❓\nНажми на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Нужен еще билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
 
 
     cnx.close()
