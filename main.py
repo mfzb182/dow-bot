@@ -13,11 +13,13 @@ db_pass = os.environ.get('DB_PASS', None)
 db_host = os.environ.get('DB_HOST', None)
 db_port = os.environ.get('DB_PORT', None)
 
+
 @bot.message_handler(commands=['start'])
 def start_photo(message):
     with open('img/main_image.jpg', 'rb') as photo:
-	    bot.send_photo(message.chat.id, photo)
-	    bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажми на кнопку 🔽 Получить билд 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
+        bot.send_photo(message.chat.id, photo)
+        bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажми на кнопку 🔽 Получить билд 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
+
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
@@ -26,6 +28,7 @@ def send_text(message):
        bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() != 'получить билд':
         bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
+
 
 def search_build(message):
     cnx = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name)
@@ -38,7 +41,6 @@ def search_build(message):
     hero = ("SELECT HeroNAME FROM builds WHERE HeroName = %s")
     cursor.execute(hero, (query,))
     row_hero = cursor.fetchone()
-
 
     if not row_hero:
         bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
@@ -59,8 +61,8 @@ def search_build(message):
         bot.send_message(message.chat.id, full_build)
         bot.send_message(message.chat.id, 'Нужен еще билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
 
-
     cnx.close()
+
 
 bot.polling(timeout=10)
 
