@@ -16,10 +16,10 @@ def start_photo(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text.lower() == 'получить билд':
-       sch = bot.send_message(message.chat.id, 'Напишите для какого героя вам нужен билд:')
+       sch = bot.send_message(message.chat.id, 'Напишите для какого героя вам нужен билд 🤔')
        bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() != 'получить билд':
-        bot.send_message(message.chat.id, 'Нажмите на кнопку!',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Нажмите на кнопку 🌚',reply_markup=keyboard1)
 
 def search_build(message):
     cnx = mysql.connector.connect(user='b525271a540473', password='558d25ff', host='eu-cdbr-west-01.cleardb.com', port='3306', database='heroku_0185be8cf2dc584')
@@ -35,7 +35,7 @@ def search_build(message):
 
 
     if not row_hero:
-        bot.send_message(message.chat.id, 'Такого героя не существует!\nНажмите снова на кнопку Получить билд',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажмите снова на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
     else:
         result = []
         for row in rows_build:
@@ -48,10 +48,10 @@ def search_build(message):
         slot_4 = result[3]
         slot_5 = result[4]
         slot_6 = result[5]
-        full_build = "Рекомендованный билд для {}:"\
+        full_build = "🔝 Рекомендованный билд для {} 🔝"\
                      "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
         bot.send_message(message.chat.id, full_build)
-        bot.send_message(message.chat.id, 'Если вам нужен билд еще для одного героя нажмите снова на кнопку Получить билд',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Если вам нужен билд еще для одного героя нажмите снова на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
 
 
     cnx.close()
