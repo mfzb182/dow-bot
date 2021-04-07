@@ -34,7 +34,7 @@ def search_build(message):
     cnx = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name)
     cursor = cnx.cursor()
     build_sql = ("SELECT Slot1, Slot2, Slot3, Slot4, Slot5, Slot6 FROM builds WHERE HeroName = %s")
-    msg_query = message.text.lower
+    msg_query = message.text
     cursor.execute(build_sql, (msg_query,))
     rows_build = cursor.fetchall()
 
