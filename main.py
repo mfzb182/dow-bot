@@ -45,15 +45,12 @@ def search_build(message):
     if not row_hero:
         bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
     else:
-        hero_result = []
-        for row in row_hero:
-            hero_result.append(row)
         build_result = []
         for row in rows_build:
             for x in row:
                 build_result.append(x)
 
-        hero_name = hero_result[0]
+        hero_name = row_hero[0]
         slot_1 = build_result[0]
         slot_2 = build_result[1]
         slot_3 = build_result[2]
