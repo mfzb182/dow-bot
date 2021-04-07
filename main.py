@@ -1,4 +1,5 @@
 import telebot
+import os
 import mysql.connector
 from mysql.connector import errorcode, cursor
 from telebot import types
@@ -6,6 +7,12 @@ from telebot import types
 bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard1.row('Получить билд')
+
+db_name = os.environ.get('DB_NAME', None)
+db_user = os.environ.get('DB_USER', None)
+db_pass = os.environ.get('DB_PASS', None)
+db_host = os.environ.get('DB_HOST', None)
+db_port = os.environ.get('DB_PORT', None)
 
 @bot.message_handler(commands=['start'])
 def start_photo(message):
@@ -22,7 +29,7 @@ def send_text(message):
         bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
 
 def search_build(message):
-    cnx = mysql.connector.connect(user='b525271a540473', password='558d25ff', host='eu-cdbr-west-01.cleardb.com', port='3306', database='heroku_0185be8cf2dc584')
+    cnx = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name)
     cursor = cnx.cursor()
     build = ("SELECT Slot1, Slot2, Slot3, Slot4, Slot5, Slot6 FROM builds WHERE HeroName = %s")
     query = message.text
