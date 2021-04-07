@@ -16,7 +16,7 @@ def start_photo(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text.lower() == 'получить билд':
-       sch = bot.send_message(message.chat.id, 'Напиши для какого героя вам нужен билд 🤔')
+       sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
        bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() != 'получить билд':
         bot.send_message(message.chat.id, 'Нажмите на кнопку 🌚',reply_markup=keyboard1)
