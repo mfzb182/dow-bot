@@ -21,19 +21,20 @@ def start_photo(message):
     with open('img/main_image.jpg', 'rb') as photo:
         bot.send_photo(message.chat.id, photo)
         bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажми на кнопку'
-                                          ' 🔽 Получить билд 🔽 или 🔽 Посмотреть тир 🔽 чтобы начать работу ✌️',reply_markup=keyboard1)
+                                          ' 🔽 Получить билд 🔽 или 🔽 Посмотреть тир 🔽 чтобы начать работу ✌️',
+                         reply_markup=keyboard1)
 
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text.lower() == 'получить билд':
-       sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
-       bot.register_next_step_handler(sch, search_build)
+        sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
+        bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() == 'посмотреть тир':
-        sch_t = bot.send_message(message.chat.id, 'Выбери нужный тир',reply_markup=keyboard2)
+        sch_t = bot.send_message(message.chat.id, 'Выбери нужный тир', reply_markup=keyboard2)
         bot.register_next_step_handler(sch_t, search_tier)
     elif message.text.lower() != 'получить билд' or 'посмотреть тир':
-        bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Нажми на кнопку 🌚', reply_markup=keyboard1)
 
 
 def search_tier(message):
@@ -45,7 +46,8 @@ def search_tier(message):
     row_tier = cursor.fetchall()
 
     if not row_tier:
-        bot.send_message(message.chat.id, '❌ Этого тир не существует ❌\nНажми снова на кнопку\n ⬇️ Посмотреть тир ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, '❌ Этого тир не существует ❌\nНажми снова на кнопку\n ⬇️ Посмотреть тир ⬇️',
+                         reply_markup=keyboard1)
     else:
         tier_result = []
         for row in row_tier:
@@ -55,7 +57,7 @@ def search_tier(message):
         tier_msg = "Рекомендованный тир героев: {}".format(tier)
         bot.send_message(message.chat.id, tier_msg)
         bot.send_message(message.chat.id, 'Нужен тир или билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️или'
-                                          '  ⬇️ Посмотреть тир ⬇️',reply_markup=keyboard1)
+                                          '  ⬇️ Посмотреть тир ⬇️', reply_markup=keyboard1)
 
     cnx.close()
 
@@ -74,7 +76,7 @@ def search_build(message):
 
     if not row_hero:
         bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n'
-                                          ' ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
+                                          ' ⬇️ Получить билд ⬇️', reply_markup=keyboard1)
     else:
         build_result = []
         for row in rows_build:
@@ -87,10 +89,12 @@ def search_build(message):
         slot_4 = build_result[3]
         slot_5 = build_result[4]
         slot_6 = build_result[5]
-        full_build = "✅🔝 Рекомендованный билд для {}"\
-                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(msg_query,slot_1,slot_2,slot_3,slot_4,slot_5,slot_6)
+        full_build = "✅🔝 Рекомендованный билд для {}" \
+                     "\n\n1. {}\n2. {}\n3. {}\n4. {}\n5. {}\n6. {}".format(msg_query, slot_1, slot_2, slot_3, slot_4,
+                                                                           slot_5, slot_6)
         bot.send_message(message.chat.id, full_build)
-        bot.send_message(message.chat.id, 'Нужен еще билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Нужен еще билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️',
+                         reply_markup=keyboard1)
 
     cnx.close()
 
@@ -99,4 +103,3 @@ bot.polling(timeout=10)
 
 while True:
     pass
-
