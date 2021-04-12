@@ -5,7 +5,13 @@ from telebot import types
 
 bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-keyboard1.row('Получить билд')
+keyboard2 = types.InlineKeyboardMarkup()
+keyboard1.row('Получить билд', 'Посмотреть Tier')
+keyboard2.row(
+    types.InlineKeyboardButton('Tier 1'),
+    types.InlineKeyboardButton('Tier 2'),
+    types.InlineKeyboardButton('Tier 3')
+)
 
 db_name = os.environ.get('DB_NAME', None)
 db_user = os.environ.get('DB_USER', None)
@@ -26,8 +32,35 @@ def send_text(message):
     if message.text.lower() == 'получить билд':
        sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
        bot.register_next_step_handler(sch, search_build)
-    elif message.text.lower() != 'получить билд':
+    elif message.text.lower() == 'получить tier':
+        sch_t = bot.send.message(message.chat.id, 'Выбери нужный tier',inline_markup=keyboard2)
+        bot.register_next_step_handler(sch_t, search_tier)
+    elif message.text.lower() != 'получить билд' or 'получить tier':
         bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
+
+
+def search_tier(message):
+    cnx = mysql.connector.connect(user=db_user, password=db_pass, host=db_host, port=db_port, database=db_name)
+    cursor = cnx.cursor()
+    tier_sql = ("SELECT TierList FROM tiers WHERE TierName = %s")
+    msg_query = message.text
+    cursor.execute(tier_sql, (msg_query,))
+    row_tier = cursor.fetchall()
+
+    if not row_tier:
+        bot.send_message(message.chat.id, '❌ Этого tier не существует ❌\nНажми снова на кнопку\n ⬇️ Получить tier ⬇️',reply_markup=keyboard1)
+    else:
+        tier_result = []
+        for row in row_tier:
+            tier_result = row
+
+        tier = tier_result[0]
+        tier_msg = "Рекомендованный tier героев: {}".format(tier)
+        bot.send_message(message.chat.id, tier_msg)
+        bot.send_message(message.chat.id, 'Нужен tier или билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️или'
+                                          '  ⬇️ Получить tier ⬇️',reply_markup=keyboard1)
+
+    cnx.close()
 
 
 def search_build(message):
@@ -43,7 +76,8 @@ def search_build(message):
     row_hero = cursor.fetchone()
 
     if not row_hero:
-        bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, '❌ Такого героя не существует ❌\nНажми снова на кнопку\n'
+                                          ' ⬇️ Получить билд ⬇️',reply_markup=keyboard1)
     else:
         build_result = []
         for row in rows_build:
