@@ -7,7 +7,7 @@ bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard2 = types.ReplyKeyboardMarkup()
 keyboard1.row('Получить билд', 'Посмотреть тир')
-keyboard2.row('Тир 1', 'Тир 2', 'Тир 3')
+keyboard2.row('Tier 1', 'Tier 2', 'Tier 3')
 
 db_name = os.environ.get('DB_NAME', None)
 db_user = os.environ.get('DB_USER', None)
