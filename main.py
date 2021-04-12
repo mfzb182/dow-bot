@@ -35,7 +35,7 @@ def send_text(message):
     elif message.text.lower() == 'получить tier':
         sch_t = bot.send.message(message.chat.id, 'Выбери нужный tier',inline_markup=keyboard2)
         bot.register_next_step_handler(sch_t, search_tier)
-    elif message.text.lower() != 'получить билд' or 'получить tier':
+    elif message.text.lower() != 'получить билд' and 'получить tier':
         bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
 
 
