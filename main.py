@@ -6,7 +6,7 @@ from telebot import types
 bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard2 = types.InlineKeyboardMarkup()
-keyboard1.row('Получить билд', 'Посмотреть Tier')
+keyboard1.row('Получить билд', 'Посмотреть тир')
 keyboard2.row(
     types.InlineKeyboardButton('Tier 1'),
     types.InlineKeyboardButton('Tier 2'),
@@ -32,10 +32,10 @@ def send_text(message):
     if message.text.lower() == 'получить билд':
        sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
        bot.register_next_step_handler(sch, search_build)
-    elif message.text.lower() == 'получить tier':
-        sch_t = bot.send.message(message.chat.id, 'Выбери нужный tier',inline_markup=keyboard2)
+    elif message.text.lower() == 'посмотреть тир':
+        sch_t = bot.send.message(message.chat.id, 'Выбери нужный тир',inline_markup=keyboard2)
         bot.register_next_step_handler(sch_t, search_tier)
-    elif message.text.lower() != 'получить билд' and 'получить tier':
+    elif message.text.lower() != 'получить билд' or 'посмотреть тир':
         bot.send_message(message.chat.id, 'Нажми на кнопку 🌚',reply_markup=keyboard1)
 
 
@@ -48,17 +48,17 @@ def search_tier(message):
     row_tier = cursor.fetchall()
 
     if not row_tier:
-        bot.send_message(message.chat.id, '❌ Этого tier не существует ❌\nНажми снова на кнопку\n ⬇️ Получить tier ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, '❌ Этого тир не существует ❌\nНажми снова на кнопку\n ⬇️ Посмотреть тир ⬇️',reply_markup=keyboard1)
     else:
         tier_result = []
         for row in row_tier:
             tier_result = row
 
         tier = tier_result[0]
-        tier_msg = "Рекомендованный tier героев: {}".format(tier)
+        tier_msg = "Рекомендованный тир героев: {}".format(tier)
         bot.send_message(message.chat.id, tier_msg)
-        bot.send_message(message.chat.id, 'Нужен tier или билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️или'
-                                          '  ⬇️ Получить tier ⬇️',reply_markup=keyboard1)
+        bot.send_message(message.chat.id, 'Нужен тир или билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️или'
+                                          '  ⬇️ Посмотреть тир ⬇️',reply_markup=keyboard1)
 
     cnx.close()
 
