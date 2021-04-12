@@ -31,7 +31,7 @@ def send_text(message):
         sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
         bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() == 'посмотреть тир':
-        sch_t = bot.send_message(message.chat.id, 'Выбери нужный тир', reply_markup=keyboard2)
+        sch_t = bot.send_message(message.chat.id, 'Выбери нужный тир 🤔', reply_markup=keyboard2)
         bot.register_next_step_handler(sch_t, search_tier)
     elif message.text.lower() != 'получить билд' or 'посмотреть тир':
         bot.send_message(message.chat.id, 'Нажми на кнопку 🌚', reply_markup=keyboard1)
@@ -54,7 +54,7 @@ def search_tier(message):
             tier_result = row
 
         tier = tier_result[0]
-        tier_msg = "Рекомендованный тир героев: {}".format(tier)
+        tier_msg = "✅🔝 Рекомендованный тир героев: {}".format(tier)
         bot.send_message(message.chat.id, tier_msg)
         bot.send_message(message.chat.id, 'Нужен тир или билд❓\nНажми на кнопку ⬇️ Получить билд ⬇️или'
                                           '  ⬇️ Посмотреть тир ⬇️', reply_markup=keyboard1)
