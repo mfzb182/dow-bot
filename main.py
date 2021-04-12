@@ -7,11 +7,9 @@ bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard2 = types.InlineKeyboardMarkup()
 keyboard1.row('Получить билд', 'Посмотреть тир')
-keyboard2.row(
-    types.InlineKeyboardButton('Tier 1'),
-    types.InlineKeyboardButton('Tier 2'),
-    types.InlineKeyboardButton('Tier 3')
-)
+btn_t1 = types.InlineKeyboardButton('Tier 1')
+btn_t2 = types.InlineKeyboardButton('Tier 2')
+btn_t3 = types.InlineKeyboardButton('Tier 3')
 
 db_name = os.environ.get('DB_NAME', None)
 db_user = os.environ.get('DB_USER', None)
@@ -33,6 +31,9 @@ def send_text(message):
        sch = bot.send_message(message.chat.id, 'Напиши для какого героя нужен билд 🤔')
        bot.register_next_step_handler(sch, search_build)
     elif message.text.lower() == 'посмотреть тир':
+        keyboard2.add(btn_t1)
+        keyboard2.add(btn_t2)
+        keyboard2.add(btn_t3)
         sch_t = bot.send_message(message.chat.id, 'Выбери нужный тир',reply_markup=keyboard2)
         bot.register_next_step_handler(sch_t, search_tier)
     elif message.text.lower() != 'получить билд' or 'посмотреть тир':
