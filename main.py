@@ -20,8 +20,8 @@ db_port = os.environ.get('DB_PORT', None)
 def start_photo(message):
     with open('img/main_image.jpg', 'rb') as photo:
         bot.send_photo(message.chat.id, photo)
-        bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWar Bot ‼️ \n\nНажми на кнопку'
-                                          ' 🔽 Получить билд 🔽 или 🔽 Посмотреть тир 🔽 чтобы начать работу ✌️',
+        bot.send_message(message.chat.id, '‼️ Добро пожаловать в ассистент DawnOfWarBot ‼️ \n\nВыбери нужную'
+                                          ' команду чтобы начать работу ✌️',
                          reply_markup=keyboard1)
 
 
