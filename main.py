@@ -3,7 +3,7 @@ import os
 import mysql.connector
 from telebot import types
 
-bot = telebot.TeleBot('1791633980:AAGnBVNq8dAASULY1m5p_e9YwMWzHsioqZ0')
+bot = telebot.TeleBot(bot_token)
 keyboard1 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard2 = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
 keyboard1.row('Получить билд', 'Посмотреть тир')
